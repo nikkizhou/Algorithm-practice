@@ -1,5 +1,3 @@
-// s1: forstå ikke printPostorder og insert
-
 class Node {
   int data;
   Node left, right;
@@ -117,8 +115,8 @@ class BinaryTree {
     tree.insert(tree.root, 41);
     tree.insert(tree.root, 31);
     tree.insert(tree.root, 21);
-    tree.deleteRec(tree.root, 21);
-    tree.deleteRec(tree.root, 18);
+    // tree.deleteRec(tree.root, 21);
+    // tree.deleteRec(tree.root, 18);
     
     System.out.println("Height of tree is : " +
         tree.height(tree.root));
