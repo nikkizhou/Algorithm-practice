@@ -63,7 +63,7 @@ class Teque {
       Scanner sc = new Scanner(minFil);
       while (sc.hasNextLine()) {
         String[] lineArr = sc.nextLine().split(" ");
-        int i = Integer.parseInt(lineArr[1]);
+        int i = lineArr.length > 1 ? Integer.parseInt(lineArr[1]) : -1;
         switch (lineArr[0]) {
           case "push_back":
             teque.push_back(i);
@@ -72,10 +72,10 @@ class Teque {
             teque.push_front(i);
             break;
           case "push_middle":
-            teque.push_front(i);
+            teque.push_middle(i);
             break;
           case "get":
-            teque.get(i);
+            System.out.println(teque.get(i));
             break;
           default:
             break;
