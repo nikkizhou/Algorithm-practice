@@ -1,0 +1,59 @@
+Oppgave 2:
+(a)pseudokode
+Input: Et element x
+
+Procedure push_back(x)
+  backDque ← addLast(x) 
+  if |backDque| > |frontDque|+1 then
+    frontDque ← addLast(backDque[0]) 
+
+Procedure push_front(x)
+  frontDque ← addFirst(x) 
+  if |frontDque| > |backDque|+1 then
+    backDque ← addFirst(frontDque[-1]) 
+
+Procedure push_middle(x)
+  if (|frontDque| < |backDque|) then 
+    frontDque ← addLast(x) 
+  else then
+    backDque ← addFirst(x) 
+
+  if |frontDque| > |backDque|+1 then 
+    backDque ← addFirst(frontDque[-1]) 
+  else then
+    frontDque ← addLast(backDque[0]) 
+
+Procedure get(i)
+  if (i < |frontDque|) then
+    return frontDque[i]
+  else
+    return backDque[i - |frontDque|]
+
+(b)
+(c)
+er det greit med pseudokode? skal vi skriver pseudokode i eksamen?
+
+
+
+Oppgave 3:
+
+kittenIndex ← fist line of the file
+nodeTree ← new Node[100]
+for i←0 to 100 do
+  nodeTree[i] ← new Node(i)  
+
+while hasNextLine do
+  lineArr ← line.split(" ")
+  foreldreIndex ← lineArr[0]
+  if foreldreIndex != -1 then
+    forelNode ← nodeTree[foreldreIndex]  
+    for i←1 to |lineArr| do
+      number ← lineArr[i]
+      nodeTree[number].foreldre ← forelNode  
+
+peker ← nodeTree[kittenIndex] 
+resultat ← "" 
+while peker!= null do
+  resultat += " "+peker.data;
+  peker ← peker.foreldre 
+print resultat 
