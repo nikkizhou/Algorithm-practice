@@ -107,11 +107,11 @@ class BinaryTree {
 
   public static void main(String[] args) {
     BinaryTree tree = new BinaryTree();
-    tree.root = new Node(19);
+    tree.root = new Node(5);
 
-    tree.insert(tree.root, 18);
     tree.insert(tree.root, 8);
-    tree.insert(tree.root, 38);
+    tree.insert(tree.root, 10);
+    tree.insert(tree.root, 3);
     tree.insert(tree.root, 41);
     tree.insert(tree.root, 31);
     tree.insert(tree.root, 21);
