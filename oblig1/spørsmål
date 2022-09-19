@@ -17,5 +17,11 @@ java Teque < tests/oppgave2/inputs/input_100
 java Teque < tests/oppgave2/inputs/input_100c >t.txt
 t.txt  (line 11)
 
-4. Må jeg passere alle tests for å blir godkjent?
-5. Skal vi skriver pseudokode i eksamen?
+4.oblig1-4b
+Programmet må først plassere elementene som leses inn på en
+heap, og derretter kalle på implementasjonen av algoritmen du har
+kommet frem til.
+en PriorityQueue er en heap ikke sant??
+
+5. Må jeg passere alle tests for å blir godkjent?
+6. Skal vi skriver pseudokode i eksamen?

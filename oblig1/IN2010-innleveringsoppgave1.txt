@@ -63,36 +63,34 @@ print resultat
 
 oppgave 4
 (a)
-Procedure converArrToAvl(array, start, end)
-  if (start > end) then
-      return null;
-    
-  mid ← (start + end) / 2;
-  node ← new Node(arr[mid]);
+Procedure printBalanced(array, start, end) 
+    if (start > end) do
+      return;
+    mid ← (start + end) / 2;
+    print(arr[mid]);
+    printBalanced(arr, mid + 1, end);
+    printBalanced(arr, start, mid - 1);
 
-  node.left ← converArrToAvl(arr, start, mid - 1);
-  node.right ← converArrToAvl(arr, mid + 1, end)
-  return node
-
-
-Procedure preOrder(node) {
-  if (node == null) then
-    return;
-  print(node.data);
-  preOrder(node.left);
-  preOrder(node.right);
-}
-
-
-arr = empty array
-for all numbers/lines in input file 
-  arr.add(number) 
-}
-
-tree = new AvlTre();
-root = tree.converArrToAvl(arr, 0, arr.length - 1);
-tree.preOrder(root);
-
+arr ← empty array
+for all lines in file do
+  arr ← a new array with length |arr|+1
+  arr[|arr|-1] = value in the line;
+tree = new AvlArr();
+tree.printBalanced(arr, 0, |arr|-1);
 
 
 (b)
+Procedure printBalanced( mainQue) 
+    if (|mainQue| == 0) do
+      return;
+    else if (|mainQue| == 1) do
+      print(mainQue.poll())
+    else {
+      left ← new PriorityQueue
+      for i←0 to |mainQue|/2 do
+        left.add(mainQue.poll());
+      mid ← mainQue.poll();
+      print(mid);
+      printBalanced(mainQue);
+      printBalanced(left);
+    

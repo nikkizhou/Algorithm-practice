@@ -12,7 +12,7 @@ class AvlArr {
       return;
     
     int mid = (start + end) / 2;
-    System.out.println(mid+1);
+    System.out.println(arr[mid]);
     
     printBalanced(arr, mid + 1, end);
     printBalanced(arr, start, mid - 1);
@@ -30,7 +30,7 @@ class AvlArr {
       arr[arr.length-1] = x;
     }
 
-    //2. print array to in a balanced way
+    //2. print array in a balanced way
     AvlArr tree = new AvlArr();
     tree.printBalanced(arr, 0, arr.length - 1);
   }
