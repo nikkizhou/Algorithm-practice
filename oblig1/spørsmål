@@ -1,0 +1,21 @@
+1. oblig1-1, 
+når remove en node som ikke finnes in tre, size fortatt --
+input_100, line 17 
+java BinaryTreeSet < tests/oppgave1/inputs/input_100c
+
+2.oblig1-2
+(c) og (d)
+
+2.oblig1-2
+java Teque < tests/oppgave2/inputs/input_10 | cmp - tests/oppgave2/outputs/output_10
+feilmelding
+
+3.oblig1-2, 
+output_100, line 7 (get 33), forventer 208034656 (line 11), men fikk 94640931(line2);
+Det er mest sannsynlig noe som er feil med push_middle??
+java Teque < tests/oppgave2/inputs/input_100
+java Teque < tests/oppgave2/inputs/input_100c >t.txt
+t.txt  (line 11)
+
+4. Må jeg passere alle tests for å blir godkjent?
+5. Skal vi skriver pseudokode i eksamen?

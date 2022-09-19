@@ -1,4 +1,4 @@
-package tests.oppgave4;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -57,7 +57,7 @@ class BalanceChecker {
         BinarySearchTree tree = new BinarySearchTree();
 
         for (String line = br.readLine(); line != null; line = br.readLine()) {
-            int x = Integer.parseInt(line);
+            int x = Integer.parseInt(line.trim());
             tree.insert(x);
         }
         if (tree.isBalanced()) {

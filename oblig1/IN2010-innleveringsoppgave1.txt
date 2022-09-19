@@ -29,20 +29,22 @@ Procedure get(i)
   else
     return backDque[i - |frontDque|]
 
-(b)
 (c)
-er det greit med pseudokode? skal vi skriver pseudokode i eksamen?
+Verste-tilfelle til alle fire metoder er O(1),
+fordi både addFirst(), addLast() og size() til en deque er O(1).
+
+
+(d)
 
 
 
 Oppgave 3:
-
-kittenIndex ← fist line of the file
+kittenIndex ← fist line in the file
 nodeTree ← new Node[100]
 for i←0 to 100 do
   nodeTree[i] ← new Node(i)  
 
-while hasNextLine do
+for 2nd to last line in the input file
   lineArr ← line.split(" ")
   foreldreIndex ← lineArr[0]
   if foreldreIndex != -1 then
@@ -57,3 +59,40 @@ while peker!= null do
   resultat += " "+peker.data;
   peker ← peker.foreldre 
 print resultat 
+
+
+oppgave 4
+(a)
+Procedure converArrToAvl(array, start, end)
+  if (start > end) then
+      return null;
+    
+  mid ← (start + end) / 2;
+  node ← new Node(arr[mid]);
+
+  node.left ← converArrToAvl(arr, start, mid - 1);
+  node.right ← converArrToAvl(arr, mid + 1, end)
+  return node
+
+
+Procedure preOrder(node) {
+  if (node == null) then
+    return;
+  print(node.data);
+  preOrder(node.left);
+  preOrder(node.right);
+}
+
+
+arr = empty array
+for all numbers/lines in input file 
+  arr.add(number) 
+}
+
+tree = new AvlTre();
+root = tree.converArrToAvl(arr, 0, arr.length - 1);
+tree.preOrder(root);
+
+
+
+(b)

@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 
-
 class Node {
   int data;
   Node left, right;
@@ -29,34 +28,36 @@ class BinaryTreeSet {
     return search(node, key) != null;
   }
 
-  
   public Node insertRec(Node node, int key) {
-    if (node == null) 
-      return new Node(key);
-      
+    if (node == null) {
+      node = new Node(key);
+      return node;
+    }
     if (key < node.data)
       node.left = insertRec(node.left, key);
     else if (key > node.data)
       node.right = insertRec(node.right, key);
-    else if(key == node.data)
+    else  //duplicate inserting
       return null;
+
     return node;
   }
-  
+
   public void insert(int key) {
     root = insertRec(root, key);
-    if (root!= null) 
+    if (root != null) {
       size++;
+    }
   }
 
-
   public Node removeRec(Node node, int key) {
-    //case 1 : If the tree is empty or if key doesn't match any node data
+    // case 1 : If the tree is empty or can't find a matched node
     if (node == null)
       return null;
-    //case 2:if the tree is not empty, recur down the tree
+
+    // case 2:if the tree is not empty, recur down the tree
     // 2-1 try inserting key to left child
-    if (key < node.data)   
+    if (key < node.data) 
       node.left = removeRec(node.left, key);
     // 2-2 try inserting key to right child
     else if (key > node.data) 
@@ -70,9 +71,9 @@ class BinaryTreeSet {
         return node.left;
 
       // 2-3-2 node with two children:
-      // Get the inorder successor (smallest in the right subtree)
+      // Get the minValue in the right subtree
       node.data = minValue(node.right);
-      // Delete the inorder successor
+      // Delete the minValue in the right subtree
       node.right = removeRec(node.right, node.data);
     }
 
@@ -81,7 +82,7 @@ class BinaryTreeSet {
 
   public void remove(int key) {
     root = removeRec(root, key);
-    if (root!=null) 
+    if (root != null) 
       size--;
   }
 
@@ -98,15 +99,6 @@ class BinaryTreeSet {
     return minv;
   }
 
-  void preOrder(Node node) {
-    if (node == null)
-      return;
-    System.out.print(node.data + " ");
-    preOrder(node.left);
-    preOrder(node.right);
-  }
-  
-
   public static void main(String[] args) throws IOException{
     BinaryTreeSet tree = new BinaryTreeSet();
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -122,16 +114,14 @@ class BinaryTreeSet {
           tree.remove(i);
           break;
         case "contains":
-          System.out.println(tree.contains(tree.root, i));
+          System.out.println(tree.contains(tree.root, i)+"\n");
           break;
         case "size":
-          System.out.println(tree.size(tree.root));
+          System.out.println(tree.size(tree.root)+"\n");
           break;
         default:
           break;
       }
     }
-    tree.preOrder(tree.root);
-    
   }
 }
