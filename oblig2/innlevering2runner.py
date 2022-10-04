@@ -6,6 +6,7 @@ import selection
 import merge
 import math
 import time
+import os
 
 # The student can adjust these parameters to conduct their experiments
 
@@ -14,7 +15,7 @@ ALGS1 = [insertion.sort, quick.sort, selection.sort, merge.sort]
 # Put the sorting algorithms under test for part 2 here
 ALGS2 = [insertion.sort, quick.sort, selection.sort,merge.sort]
 # Time limit for a single sorting in milliseconds
-TIME_LIMIT_MS = 100
+TIME_LIMIT_MS = 10000
 # How much n grows each iteration for part 2
 INCREMENT = 1
 
@@ -30,7 +31,7 @@ def run_algs_part1(A, infilename):
         countA = CountSwaps([CountCompares(x) for x in A])
         outfilename = infilename + '_' + algname(alg) + '.out'
         outstr = '\n'.join(map(str, alg(countA)))
-        with open(f"outputs/{outfilename}", 'w') as f:
+        with open(f"outputs/{outfilename.replace('inputs/','')}", 'w') as f:
             f.write(outstr)
 
 
@@ -77,7 +78,7 @@ def runalg(alg, A, i, discarded):
     comparisons = sum(x.compares for x in countingA)
     swaps = countingA.swaps
 
-    return fmt % (comparisons, swaps, timeus)
+    return fmt % (comparisons, swaps, timems)
 
 
 # Run all sorting algorithms from 0 to n, and write CSV file
@@ -85,7 +86,7 @@ def run_algs_part2(A, infilename):
     outfilename = infilename + '_results.csv'
     discarded = set()
 
-    f = open(f"outputs/{outfilename}", 'w')
+    f = open(f"outputs/csv/{outfilename.replace('inputs/','')}", 'w')
     digits = int(math.log10(len(A)) + 1)
     header = makeheader(ALGS2, digits)
 
@@ -107,7 +108,7 @@ def run_algs_part2(A, infilename):
         f.write(row + '\n')
 
         now = time.time_ns()
-        if now - printtime > 10e8:
+        if now - printtime > 10e9:
             print(row)
             printtime = now
             f.flush()
