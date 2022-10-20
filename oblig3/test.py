@@ -56,16 +56,3 @@ graph = {'A': ['B', 'E', 'C'],
   
 # Function Call
 BFS_SP(graph, 'A', 'D')
-
-
-
-
-if node not in visited:
-  naboer = set(sum(graph[node].values(), [])) #graph[s].values(): [[A1,A2,A3],[A1,A4]]  naboer:{A2,A3,A4}
-  for nabo in naboer:
-    newPath = list(path)
-    newPath.append(nabo)
-    queue.append(newPath)
-
-     
-        """

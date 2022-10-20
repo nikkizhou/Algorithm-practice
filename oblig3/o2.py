@@ -1,3 +1,4 @@
+
 from collections import deque
 from collections import defaultdict
 import csv
@@ -253,31 +254,15 @@ def main():
     print(" ")
 
     print("oppgave 2: ")
-    path1 = find_shortest_path(G, shortest_path_parents(G, 'nm2255973'),'nm0000460')
-    path2 = find_shortest_path(G, shortest_path_parents(G, 'nm0424060'),'nm0000243')
-    path3 = find_shortest_path(G,shortest_path_parents(G, 'nm4689420'),'nm0000365')
-    path4 = find_shortest_path(G,shortest_path_parents(G, 'nm0000288'),'nm0001401')
-    path5 = find_shortest_path(G,shortest_path_parents(G, 'nm0031483'),'nm0931324')
-    nice_print(G, path1[0], path1)
-    nice_print(G, path2[0], path2)
-    nice_print(G, path3[0], path3)
-    nice_print(G, path4[0], path4)
-    nice_print(G, path5[0], path5)
-
+    path1 = find_shortest_path(G, shortest_path_parents(G, 'nm0000313'),'nm0000458')
+    nice_print(G, 'nm0000313', path1)
+   
     print(" ")
 
     print("oppgave 3: ")
-    path6 = find_shortest_path(G, find_chillest_path(G,'nm2255973'),'nm0000460')
-    path7 = find_shortest_path(G, find_chillest_path(G,'nm0424060'),'nm0000243')
-    path8 = find_shortest_path(G, find_chillest_path(G,'nm4689420'),'nm0000365')
-    path9 = find_shortest_path(G, find_chillest_path(G,'nm0000288'),'nm0001401')
-    path10 = find_shortest_path(G, find_chillest_path(G,'nm0031483'),'nm0931324')
+    path6 = find_shortest_path(G, find_chillest_path(G,'nm0000313'),'nm0000458') 
     nice_print(G, path6[0], path6, weight=True)
-    nice_print(G, path7[0], path7, weight=True)
-    nice_print(G, path8[0], path8, weight=True)
-    nice_print(G, path9[0], path9, weight=True)
-    nice_print(G, path10[0], path10, weight=True)
-
+    
     print(" ")
     print("oppgave 4: ")
     liste = components_and_size(G)
