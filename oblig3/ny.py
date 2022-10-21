@@ -4,8 +4,11 @@ from collections import deque
 from collections import defaultdict
 from heapq import heappush, heappop
 
-allMovies = dict() 
-allActors = dict()
+allMovies,allActors = dict(),dict()
+#allMovies {'tt8093700':['Ant-Man', 8.3], 'tt8093701': ['Iron Man', 5.7]}
+#allActors {'nm0886638': ['Tome', ['tt0051407','tt0051407'], 'nm0886638': ['Mamie', ['tt0063790', 'tt0062514']]}
+#E {a1:{a2,a3,a6}, a2:{a1,a4,a6},...} 
+#w {(a1,a2): m1, (a1,a3): m2}
 
 def readFileAndBuildGraph():
   w,E = defaultdict(set),defaultdict(set)
@@ -19,16 +22,13 @@ def readFileAndBuildGraph():
       
   with open('actors.tsv', encoding='utf8') as f:
     movie_actors = defaultdict(set) #{'movie1': {'a1','a2','a3'..}, 'movie2': {'a3', 'a5'}...}
-
     for line in f:
       listt = line.strip().split("\t") #['nm0886638', 'Mamie Van Doren', 'movie1', 'movie2', 'movie3']
       id,name,movies = listt[0],listt[1],listt[2:]
       allActors[id]= [name, movies]
-
       #for every movie of each actor, check if there is any other actor that has a common movie
       #if yes, add an edge of these two actors to G
       buildGraph(id,movies,movie_actors,w,E)
-  
   return w,E
     
 def buildGraph(actorId,movies, movie_actors,w,E):
@@ -40,21 +40,16 @@ def buildGraph(actorId,movies, movie_actors,w,E):
           E[otherActor].add(actorId)
           w[(actorId, otherActor)].add(m)
       movie_actors[m].add(actorId)  
-  
 
 def count(G):
+  w,E=G
   edges =0
-  w,_=G
   for tuple in w:
     edges+=len(w[tuple])
   print(f'- Oppgave 1:\n\nNodes: {len(allActors)} \nEdges: {edges}')
  
-
 #-----------------------------OPPGAVE 2 ------------------------------
-#allMovies {'tt8093700':['Ant-Man', 8.3], 'tt8093701': ['Iron Man', 5.7]}
-#allActors {'nm0886638': ['Tome', ['tt0051407','tt0051407'], 'nm0886638': ['Mamie', ['tt0063790', 'tt0062514']]}
-#E {a1:{a2,a3,a6}, a2:{a1,a4,a6},...} 
-#w {(a1,a2): m1, (a1,a3): m2}
+
 def BFSVisit(E,start,end):
   visited,queue  =[],[[start]] #queue is a list of path, path is a list of node/actorId
   while queue:
@@ -95,7 +90,6 @@ def dijkstra(G, start,end):
     nodeWeight,node= heappop(queue)
     if node==end:
       break
-
     for nabo in E[node]:
       edges = w[(node,nabo)] or w[(nabo,node)]
       maxScore,maxScoreMovieId = getMaxScore(edges)
@@ -111,8 +105,7 @@ def getMaxScore(edges):
   for movieId in edges:
     score = allMovies[movieId][1]
     if score > maxScore:
-      maxScore=score
-      maxScoreId = movieId
+      maxScore,maxScoreId = score,movieId
   return maxScore, maxScoreId
 
 def finnChillestSti(G, start,end):
@@ -135,30 +128,35 @@ def finnChillestSti(G, start,end):
     print(f'{str+allActors[end][0]} \nTotal Weight:{totalWeight}')
 
 #-----------------------------OPPGAVE 4 ------------------------------
-#allMovies {'tt8093700':['Ant-Man', 8.3], 'tt8093701': ['Iron Man', 5.7]}
-#allActors {'nm0886638': ['Tome', ['tt0051407','tt0051407'], 'nm0886638': ['Mamie', ['tt0063790', 'tt0062514']]}
-#E {a1:{a2,a3,a6}, a2:{a1,a4,a6},...} 
-#w {(a1,a2): m1, (a1,a3): m2}
+
+def DFSvisit(E,node):
+  stack, visited= [node],set()
+  while stack:
+    u=stack.pop()
+    if u not in visited:
+      visited.add(u)
+      for nabo in E[u]:
+        stack.append(nabo)
+  return visited
+
 def komponenter(G):
-  result = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0, 11:0, 113102:0}
-  w,E = G
-  visited = set()
+  result,visitedTotal = {}, set()
+  result = defaultdict(lambda:0,result)
+  _,E = G
   for node in E:
-    size = len(E[node])
-    if size in result and node not in visited:
-        result[size]+=1
-        visited = visited.union(E[node])
+    if node not in visitedTotal:
+      visitedComps = DFSvisit(E,node)
+      visitedTotal = visitedTotal.union(visitedComps)
+      result[len(visitedComps)] +=1
 
   result[1] =len(allActors)-len(E)
-  print(visited)
-  print(result)
-
+  for size in sorted(result):
+    print(f'There are {result[size]} components of size {size}')
 
 def main():
   G=readFileAndBuildGraph()
   count(G)
 
-  """
   print('\n- Oppgave 2:')
   finnKortestSti(G,'nm2255973','nm0000460')
   finnKortestSti(G,'nm0424060','nm0000243')
@@ -172,9 +170,8 @@ def main():
   finnChillestSti(G,'nm4689420','nm0000365')
   finnChillestSti(G,'nm0000288','nm0001401')
   finnChillestSti(G,'nm0031483','nm0931324')
-  """
-
-  print('\n- Oppgave 4:')
+  
+  print('\n- Oppgave 4:\n')
   komponenter(G)
 
 main()
