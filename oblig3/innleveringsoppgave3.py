@@ -14,13 +14,13 @@ def readFileAndBuildGraph():
   w,E = defaultdict(set),defaultdict(set)
   #w: {(a1,a2): {'tt1894616'}, (a2,a3):{'tt0051407','tt0063790'...}}
 
-  with open('movies.tsv', encoding='utf8') as f:
+  with open('input/movies.tsv', encoding='utf8') as f:
     for line in f:
       listt = line.strip().split("\t") #[tt7860140	Nakshatram	3.5	172]
       id,name,score = listt[0],listt[1],float(listt[2])
       allMovies[id]= [name,score]
       
-  with open('actors.tsv', encoding='utf8') as f:
+  with open('input/actors.tsv', encoding='utf8') as f:
     movie_actors = defaultdict(set) #{'movie1': {'a1','a2','a3'..}, 'movie2': {'a3', 'a5'}...}
     for line in f:
       listt = line.strip().split("\t") #['nm0886638', 'Mamie Van Doren', 'movie1', 'movie2', 'movie3']
