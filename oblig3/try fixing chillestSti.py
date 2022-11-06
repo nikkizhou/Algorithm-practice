@@ -1,5 +1,4 @@
 
-from typing import Deque
 from collections import deque
 from collections import defaultdict
 from heapq import heappush, heappop
@@ -56,13 +55,13 @@ def BFSVisit(E,start,end):
     path = queue.pop(0) #[{movie1: actor4,},{movie3: acotr2}]
     node = path[-1] #{movie2: actor2}
     if node not in visited:
+      visited.append(node)
       for nabo in E[node]:
         newPath = list(path)
         newPath.append(nabo)
         queue.append(newPath)
         if nabo==end:
           return newPath
-    visited.append(node)
   print ('\nPath does not exists!')
 
 
@@ -81,24 +80,31 @@ def finnKortestSti(G,actorId1,actorId2):
 #-----------------------------OPPGAVE 3 ------------------------------
 def dijkstra(G, start,end):
   w,E=G
-  queue=[(0, start)]
+  queue=[[0, start]]   #[[0,A], [3,A,B]]
   movie_weight = defaultdict(lambda: float('inf'))  # {start:0, 'actor2':1}
   movie_weight[start]=0
-  path = {start: None} #path: {'nm0000313': None, 'nm0005024': ('nm0000313', 'tt0371746'), ...}
+  #path = {start: None} #path: {'nm0000313': None, 'nm0005024': ('nm0000313', 'tt0371746'), ...}
   
   while queue:
-    nodeWeight,node= heappop(queue)
-    if node==end:
-      break
+    path = heappop(queue)
+    node = path[-1]
+    nodeWeight = path[0]
+    
     for nabo in E[node]:
       edges = w[(node,nabo)] or w[(nabo,node)]
       maxScore,maxScoreMovieId = getMaxScore(edges)
       c = nodeWeight+(10-maxScore)
       if c < movie_weight[nabo]:
-        movie_weight[nabo] = c
-        heappush(queue, (c,nabo))
-        path[nabo] = (node, maxScoreMovieId)
-  return path
+        newPath = list(path)
+        newPath[0] = c
+        newPath.append([maxScoreMovieId,maxScore])
+        newPath.append(nabo)
+        heappush(queue, newPath)
+       
+      if nabo==end: 
+        print(newPath)
+        return newPath
+  
 
 def getMaxScore(edges):
   maxScore,maxScoreId =0,None
@@ -111,21 +117,18 @@ def getMaxScore(edges):
 def finnChillestSti(G, start,end):
     w, E = G
     path = dijkstra(G,start,end)
-    current, pathList = path[end], []
-  
-    while current and current[0] in path:
-      actorId = current[0]
-      pathList.append(current)
-      current = path[actorId]
-    
-    str, totalWeight='',0
-    for tuple in reversed(pathList):
-      actor = '\n'+allActors[tuple[0]][0]
-      weight = allMovies[tuple[1]][1]
-      movie = f'{allMovies[tuple[1]][0]} ({weight}) '
-      totalWeight += 10-weight
+    totalWeight = path[0]
+    str=''
+
+    i=1
+    while i < len(path)-1:
+      print(i)
+      actor = '\n'+allActors[path[i]][0]
+      weight = path[i+1][1]
+      movie = f'{allMovies[path[i+1][0]][0]} ({weight}) '
       str += f'{actor}\n===[{movie}] ===>'
-    print(f'{str+allActors[end][0]} \nTotal Weight:{totalWeight}')
+      i+=2
+    print(f'{str} \nTotal Weight:{totalWeight}')
 
 #-----------------------------OPPGAVE 4 ------------------------------
 
@@ -157,21 +160,11 @@ def main():
   G=readFileAndBuildGraph()
   count(G)
 
-  print('\n- Oppgave 2:')
-  finnKortestSti(G,'nm2255973','nm0000460')
-  finnKortestSti(G,'nm0424060','nm0000243')
-  finnKortestSti(G,'nm4689420','nm0000365')
-  finnKortestSti(G,'nm0000288','nm0001401')
-  finnKortestSti(G,'nm0031483','nm0931324')
-
   print('\n- Oppgave 3:')
   finnChillestSti(G,'nm2255973','nm0000460')
   finnChillestSti(G,'nm0424060','nm0000243')
   finnChillestSti(G,'nm4689420','nm0000365')
   finnChillestSti(G,'nm0000288','nm0001401')
   finnChillestSti(G,'nm0031483','nm0931324')
-  
-  print('\n- Oppgave 4:\n')
-  komponenter(G)
 
 main()
