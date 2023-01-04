@@ -1,5 +1,5 @@
 # Algorithm-Practice
-### School work for course  &lt;Algoritmer og datastrukturer> in UIO  
+### School work for course  &lt;Algoritmer og datastrukturer> at UIO  
 
 ### Including:  
 #### Time Complexity/Big O  
